@@ -1,1 +1,1 @@
-Custom webpages for teamatatini.co.nz
+Custom webpages for tematatini.co.nz
