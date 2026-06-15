@@ -1,190 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kapa Haka Regional Results 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Te ara ki Hopuhopu — Te Matatini 2027 Qualifiers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#181210; --ink-2:#221813; --ink-3:#2c2019; --line:#3a2c22;
+    --bone:#efe5d4; --bone-dim:#bdab93;
+    --whero:#cf4327; --whero-deep:#a8311d; --kowhai:#e0a93f; --pounamu:#5c9079;
+    --radius:14px; --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--bone);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--whero);color:#fff}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-  <style>
-    :root {
-      --bg: #0f0f0f;
-      --card: #1a1a1a;
-      --hover: #222;
-      --text: #f5f5f5;
-      --muted: #aaa;
-      --accent: #c9a24d;
-    }
+  /* Hero */
+  .hero{position:relative;padding:74px 0 38px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% -10%, rgba(207,67,39,.20), transparent 60%),radial-gradient(90% 70% at 0% 0%, rgba(224,169,63,.10), transparent 55%);pointer-events:none}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--kowhai);font-weight:600;border:1px solid var(--line);border-radius:100px;padding:7px 15px;margin-bottom:26px;background:rgba(0,0,0,.2)}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--whero);box-shadow:0 0 10px var(--whero)}
+  h1.title{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.7rem,8vw,6.2rem);line-height:.95;letter-spacing:-.015em;color:var(--bone);text-wrap:balance}
+  h1.title .red{color:var(--whero);font-style:italic;font-weight:400}
+  .lede{margin-top:22px;max-width:60ch;font-size:clamp(1rem,1.6vw,1.18rem);color:var(--bone-dim)}
+  .lede strong{color:var(--bone);font-weight:600}
+  .poutama{display:block;width:100%;height:14px;margin:34px 0 0;opacity:.9}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:36px}
+  .stat{background:var(--ink-2);padding:22px 20px}
+  .stat .n{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1;color:var(--kowhai)}
+  .stat .l{margin-top:8px;font-size:.78rem;letter-spacing:.04em;color:var(--bone-dim);text-transform:uppercase}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
 
-    * {
-      box-sizing: border-box;
-    }
+  /* Controls */
+  .controls{position:sticky;top:0;z-index:30;background:rgba(24,18,16,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin-top:46px;padding:16px 0}
+  .controls-inner{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .search{position:relative;flex:1 1 240px;min-width:200px}
+  .search input{width:100%;background:var(--ink-2);border:1px solid var(--line);color:var(--bone);font-family:inherit;font-size:.95rem;padding:12px 14px 12px 42px;border-radius:100px;outline:none;transition:border-color .2s,box-shadow .2s}
+  .search input::placeholder{color:#7d6e5c}
+  .search input:focus{border-color:var(--kowhai);box-shadow:0 0 0 3px rgba(224,169,63,.16)}
+  .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:#8a7a66;fill:none}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #181818, var(--bg));
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+  .ctl-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#8a7a66;font-weight:600;margin-right:-4px}
+  .select{position:relative;display:inline-flex;align-items:center}
+  .select select{appearance:none;-webkit-appearance:none;background:var(--ink-2);border:1px solid var(--line);color:var(--bone);font-family:inherit;font-size:.84rem;font-weight:500;padding:10px 34px 10px 14px;border-radius:100px;cursor:pointer;transition:border-color .2s}
+  .select select:hover{border-color:var(--bone-dim)}
+  .select::after{content:"";position:absolute;right:15px;pointer-events:none;width:7px;height:7px;border-right:2px solid var(--bone-dim);border-bottom:2px solid var(--bone-dim);transform:translateY(-2px) rotate(45deg)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:100px;overflow:hidden;background:var(--ink-2)}
+  .seg button{font:inherit;font-size:.84rem;font-weight:500;color:var(--bone-dim);background:transparent;border:0;padding:10px 17px;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:7px}
+  .seg button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+  .seg button.active{background:var(--whero);color:#fff}
+  .count{font-size:.84rem;color:var(--bone-dim);white-space:nowrap;margin-left:auto}
+  .count b{color:var(--bone)}
 
-    .container {
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
-    }
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 2px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  .chips::-webkit-scrollbar{height:6px}
+  .chips::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px}
+  .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--ink-2);color:var(--bone-dim);font-family:inherit;font-size:.82rem;font-weight:500;padding:8px 15px;border-radius:100px;cursor:pointer;transition:.18s;white-space:nowrap}
+  .chip:hover{border-color:var(--bone-dim);color:var(--bone)}
+  .chip.active{background:var(--whero);border-color:var(--whero);color:#fff}
+  .chip .c{opacity:.7;font-variant-numeric:tabular-nums;margin-left:5px}
 
-    h1 {
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      margin-bottom: 12px;
-      letter-spacing: 0.03em;
-    }
+  main{padding:30px 0 60px}
 
-    p {
-      color: var(--muted);
-      margin-bottom: 40px;
-      font-size: 1.05rem;
-    }
+  /* Card grid — 3 up */
+  .region-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  @media(max-width:920px){.region-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.region-grid{grid-template-columns:1fr}}
+  .region{border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-2);overflow:hidden;scroll-margin-top:170px;animation:rise .5s both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .region-head{padding:20px 20px 16px;border-bottom:1px solid var(--line);position:relative}
+  .region-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--whero)}
+  .r-index{font-size:.68rem;letter-spacing:.16em;color:var(--kowhai);font-weight:600;text-transform:uppercase;display:block;margin-bottom:6px}
+  .r-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.42rem;line-height:1.08;color:var(--bone)}
+  .r-meta{font-size:.8rem;color:var(--bone-dim);margin-top:7px}
+  .r-meta span{color:var(--pounamu)}
+  .r-badge{display:inline-block;margin-top:12px;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;font-weight:600;color:var(--kowhai);border:1px solid var(--line);border-radius:100px;padding:5px 12px}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
+  .teams{list-style:none;padding:8px 10px 12px}
+  .team{display:flex;align-items:flex-start;gap:13px;padding:11px 10px;border-radius:10px;transition:background .15s}
+  .team:hover{background:var(--ink-3)}
+  .place{flex:0 0 auto;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;background:var(--ink);border:1px solid var(--line);color:var(--bone-dim)}
+  .team.gold .place{background:linear-gradient(150deg,var(--kowhai),#b5812a);color:#2a1d08;border-color:transparent}
+  .tname{font-weight:600;font-size:.97rem;color:var(--bone);letter-spacing:-.01em;line-height:1.3}
+  .tsub{font-size:.76rem;color:var(--bone-dim);margin-top:2px}
+  .tags{margin-top:5px;display:flex;flex-wrap:wrap;gap:5px}
+  .tag{display:inline-block;font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--pounamu);border:1px solid rgba(92,144,121,.4);border-radius:6px;padding:2px 6px}
+  .tag.win{color:var(--whero);border-color:rgba(207,67,39,.45)}
+  mark{background:rgba(224,169,63,.35);color:var(--bone);border-radius:3px;padding:0 2px}
 
-    a.card {
-      text-decoration: none;
-      background: linear-gradient(180deg, var(--card), #111);
-      border-radius: 18px;
-      padding: 36px 28px;
-      color: var(--text);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      position: relative;
-      overflow: hidden;
-    }
+  /* Table view */
+  .table-wrap{border:1px solid var(--line);border-radius:var(--radius);overflow-x:auto;background:var(--ink-2)}
+  table{width:100%;border-collapse:collapse;min-width:620px}
+  thead th{position:sticky;top:0;background:var(--ink-3);text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bone-dim);font-weight:600;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;white-space:nowrap}
+  thead th:hover{color:var(--bone)}
+  thead th .arrow{opacity:0;margin-left:6px;font-size:.7em}
+  thead th.sorted{color:var(--kowhai)}
+  thead th.sorted .arrow{opacity:1}
+  tbody td{padding:13px 16px;border-bottom:1px solid rgba(58,44,34,.6);font-size:.92rem;vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--ink-3)}
+  td.team-cell{font-weight:600;color:var(--bone)}
+  td.rohe-cell{color:var(--bone-dim)}
+  .pill{display:inline-flex;align-items:center;justify-content:center;min-width:34px;padding:3px 9px;border-radius:8px;font-family:'Fraunces',serif;font-weight:600;font-size:.9rem;background:var(--ink);border:1px solid var(--line);color:var(--bone-dim)}
+  .pill.gold{background:linear-gradient(150deg,var(--kowhai),#b5812a);color:#2a1d08;border-color:transparent}
+  .yes{color:var(--pounamu);font-weight:600}
+  .no{color:#6b5d4d}
 
-    a.card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.05), transparent);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
+  .empty{text-align:center;padding:60px 20px;color:var(--bone-dim);display:none}
+  .empty.show{display:block}
+  .empty .big{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--bone);margin-bottom:8px}
+  .hidden{display:none}
 
-    a.card:hover {
-      transform: translateY(-6px);
-      background: linear-gradient(180deg, var(--hover), #111);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
-    }
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;color:var(--bone-dim);font-size:.84rem}
+  footer .glos{display:flex;flex-wrap:wrap;gap:10px 26px;margin-bottom:22px}
+  footer .glos div b{color:var(--bone);font-weight:600}
+  footer .note{max-width:75ch}
+  footer a{color:var(--kowhai);text-decoration:none;border-bottom:1px solid transparent}
+  footer a:hover{border-color:var(--kowhai)}
 
-    a.card:hover::after {
-      opacity: 1;
-    }
-
-    .location {
-      font-size: 1.6rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      letter-spacing: 0.02em;
-    }
-
-    .status{
-      color: var(--accent);
-      font-size: 0.91rem;
-      letter-spacing: 0.13em;
-      /* text-transform: uppercase; */
-	    margin-bottom: 2px;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.85rem;
-      color: #777;
-    }
-  </style>
+  :focus-visible{outline:2px solid var(--kowhai);outline-offset:2px;border-radius:6px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Kapa Haka Regional Results 2026</h1>
-    <p>View the teams that qualify for Te Matatini 2027</p>
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>Tākiri Tū &middot; Te Matatini 2027 &middot; Hopuhopu</span>
+    <h1 class="title">The road to <span class="red">Hopuhopu</span></h1>
+    <p class="lede">Across the summer and autumn of 2026, <strong>56 kapa haka</strong> earned their place at <strong>Te Matatini 2027</strong> through <strong>13 regional competitions</strong> spanning Aotearoa and Australia. Every rōpū that placed in its rohe qualified for the national stage — hosted by Waikato-Tainui under the mantle of the Kīngitanga.</p>
 
-    <div class="grid">
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/kahungunu-resulkts.jpg">
-        <div class="location">Ngāti Kahungunu</div>
-    	<div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-      
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/mataatua-results.jpg">
-        <div class="location">Mataatua</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
+    <svg class="poutama" viewBox="0 0 1180 14" preserveAspectRatio="none" aria-hidden="true">
+      <defs><pattern id="pt" width="56" height="14" patternUnits="userSpaceOnUse">
+        <path d="M0 14 H14 V9 H28 V4 H42 V0 H56 V14 Z" fill="#cf4327"/>
+      </pattern></defs>
+      <rect width="1180" height="14" fill="url(#pt)" opacity="0.85"/>
+    </svg>
 
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/tkm-results.jpg">
-        <div class="location">Te Kāhui Maunga</div>
-        <div class="status"">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/te-arawa-updated-results.jpg">
-        <div class="location">Te Arawa</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/aus-results.png">
-        <div class="location">Te Whenua Moemoea</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/northland-results.png">
-        <div class="location">Te Tai Tokerau</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/tainui-results__Resampled.jpg">
-        <div class="location">Tainui</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/rangitane-results__Resampled.jpg">
-        <div class="location">Rangitāne</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/tetauihuresults.jpg">
-        <div class="location">Te Tauihu</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/gizzyresults.jpg">
-        <div class="location">Tairāwhiti</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/auck-results.jpg">
-        <div class="location">Tamaki Makaurau</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/waitaha-results.jpg">
-        <div class="location">Waitaha</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
-
-      <a class="card" href="https://www.tematatini.co.nz/assets/Uploads/wellyresults.jpg">
-        <div class="location">Whanganui ā Tara</div>
-        <div class="status">RESULTS AVAILABLE NOW</div>
-      </a>
+    <div class="stats">
+      <div class="stat"><div class="n">56</div><div class="l">Kapa qualified</div></div>
+      <div class="stat"><div class="n">13</div><div class="l">Rohe / regions</div></div>
+      <div class="stat"><div class="n">2027</div><div class="l">Te Matatini year</div></div>
+      <div class="stat"><div class="n">Hopuhopu</div><div class="l">Host, Waikato-Tainui</div></div>
     </div>
-
-    <footer>
-      Te Matatini Society Inc, 2026
-    </footer>
   </div>
+</header>
 
+<div class="controls">
+  <div class="wrap">
+    <div class="controls-inner">
+      <label class="search">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="search" type="search" placeholder="Search for a kapa…" autocomplete="off" aria-label="Search for a kapa haka team">
+      </label>
+
+      <div class="select" id="sortWrap">
+        <select id="sort" aria-label="Sort rohe by">
+          <option value="date">Sort: regionals date</option>
+          <option value="alpha">Sort: A–Z by rohe</option>
+        </select>
+      </div>
+
+      <div class="seg" id="viewSeg" role="tablist" aria-label="View">
+        <button data-v="cards" class="active" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Cards
+        </button>
+        <button data-v="table" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Table
+        </button>
+      </div>
+
+      <span class="count" id="count"></span>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div id="cardView" class="region-grid"></div>
+    <div id="tableView" class="table-wrap hidden">
+      <table>
+        <thead><tr>
+          <th data-k="team">Team <span class="arrow"></span></th>
+          <th data-k="rohe">Rohe <span class="arrow"></span></th>
+          <th data-k="place">Placing <span class="arrow"></span></th>
+          <th data-k="debut">Te Matatini debutant <span class="arrow"></span></th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty">
+      <div class="big">No kapa found</div>
+      <div>Try a different name, or clear the search to see every qualifier.</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="glos">
+    </div>
+    <p class="note">
+      Placings reflect each rohe's official regional results for the 2026 qualifying season (held February–June 2026). Two results were amended after review: <b>Te Arawa</b> confirmed joint regional winners, and <b>Tāmaki Makaurau</b> revised 2nd and 3rd place.
+    </p>
+  </div>
+</footer>
+
+<script>
+const DATA = [
+  { rohe:"Ngāti Kahungunu", name:"Ngāti Kahungunu", loc:"Waipukurau, Hawke's Bay", date:"14 February 2026", teams:[
+    {p:1,n:"Te Rangiura o Wairarapa"},{p:2,n:"Te Kapa Haka o Kahungunu"},{p:3,n:"Te Kapa Haka o Ngāti Ranginui"},{p:4,n:"Mātangirau"} ]},
+  { rohe:"Mātaatua", name:"Mātaatua", loc:"Whakatāne", date:"27–28 February 2026", teams:[
+    {p:1,n:"Te Taumata o Apanui"},{p:2,n:"Ōhinemataroa ki Ruatāhuna"},{p:3,n:"Ōpōtiki Mai Tawhiti"},{p:4,n:"Te Whakatōhea"},{p:5,n:"Tauira Mai Tawhiti"},{p:6,n:"Te Whānau-ā-Apanui"} ]},
+  { rohe:"Te Kāhui Maunga", name:"Te Kāhui Maunga", loc:"Waitara, Taranaki", date:"7 March 2026", teams:[
+    {p:1,n:"Ngā Purapura o Te Taihauāuru"},{p:2,n:"Te Reanga Morehu o Rātana"},{p:3,n:"Ngā Waihotanga"},{p:4,n:"Te Kura Nui o Paerangi"} ]},
+  { rohe:"Te Arawa", name:"Te Arawa", loc:"Rotorua", date:"14 March 2026", note:"Joint winners", teams:[
+    {p:1,n:"Te Pikikōtuku o Ngāti Rongomai", joint:true},{p:1,n:"Te Kapa Haka o Ngāti Whakaue", joint:true},{p:3,n:"Te Hekenga-ā-rangi"},{p:4,n:"Ngāti Rangiwewehi"},{p:5,n:"Te Whare Haka o Te Puku", debut:true},{p:6,n:"Te Kapa Haka o Tūhourangi Ngāti Wāhiao"} ]},
+  { rohe:"Te Whenua Moemoeā", name:"Te Whenua Moemoeā", loc:"Gold Coast, Australia", date:"28 March 2026", teams:[
+    {p:1,n:"Te Kahu Ariki", debut:true},{p:2,n:"Te Kapa Haka o Te Hau Tawhiti"},{p:3,n:"Te Whare Haka o Nārama", debut:true} ]},
+  { rohe:"Te Tai Tokerau", name:"Te Tai Tokerau", loc:"Whangārei", date:"28 March 2026", teams:[
+    {p:1,n:"Muriwhenua"},{p:2,n:"Hātea Kapa Haka"},{p:3,n:"Te Kapa Haka o Waerenga Te Kaha"} ]},
+  { rohe:"Tainui", name:"Tainui", loc:"Hamilton", date:"17–18 April 2026", teams:[
+    {p:1,n:"Te Pou o Mangataawhiri"},{p:2,n:"Te Iti Kahurangi"},{p:3,n:"Te Kapa Haka o Aawhina I Te Kaupapa", debut:true},{p:4,n:"Te Haona Kaha", debut:true},{p:5,n:"Mōtai Tangata Rau"},{p:6,n:"Te Kapa Haka o Ngā Pua o Te Kōwhara"} ]},
+  { rohe:"Rangitāne", name:"Rangitāne", loc:"Palmerston North", date:"18 April 2026", teams:[
+    {p:1,n:"Te Tū Mataora"},{p:2,n:"Te Tini o Rēhua"},{p:3,n:"Te Whirikōkō o Rangitāne"} ]},
+  { rohe:"Te Tauihu", name:"Te Tauihu", loc:"Blenheim", date:"24 April 2026", teams:[
+    {p:1,n:"Te Kuru Marutea"},{p:2,n:"Kia Ngāwari"} ]},
+  { rohe:"Tairāwhiti", name:"Tairāwhiti", loc:"Gisborne", date:"2 May 2026", note:"Tamararo", teams:[
+    {p:1,n:"Waihīrere"},{p:2,n:"Whāngārā Mai Tawhiti"},{p:3,n:"Te Hokowhitu a Tū"},{p:4,n:"Hikurangi"} ]},
+  { rohe:"Tāmaki Makaurau", name:"Tāmaki Makaurau", loc:"Auckland", date:"16 May 2026", note:"Revised result", teams:[
+    {p:1,n:"Angitu"},{p:2,n:"Te Waka Huia"},{p:3,n:"Ngā Tūmanako"},{p:4,n:"Te Rōpū Manutaki"},{p:5,n:"Te Taha Tū"},{p:6,n:"Te Poho o Hinekahukura"} ]},
+  { rohe:"Waitaha", name:"Waitaha", loc:"Christchurch", date:"23 May 2026", note:"Waitaha Matatū", teams:[
+    {p:1,n:"Te Ahikaaroa"},{p:2,n:"Kōkō Tangiwai"},{p:3,n:"Ngā Manu a Tāne"},{p:4,n:"Rukutia"},{p:5,n:"Te Pao a Tahu"} ]},
+  { rohe:"Te Whanganui-ā-Tara", name:"Te Whanganui-ā-Tara", loc:"Wellington", date:"13 June 2026", teams:[
+    {p:1,n:"Te Kapa Haka o Pukeatua", debut:true},{p:2,n:"Tu Te Maungaroa"},{p:3,n:"Te Pū Toi Kura"},{p:4,n:"Ngā Tai Whiringa", debut:true} ]},
+];
+
+const ord = ["","1st","2nd","3rd","4th","5th","6th"];
+const cardView=document.getElementById('cardView');
+const tableView=document.getElementById('tableView');
+const tbody=document.getElementById('tbody');
+const chipsEl=document.getElementById('chips');
+const countEl=document.getElementById('count');
+const emptyEl=document.getElementById('empty');
+const searchEl=document.getElementById('search');
+const sortWrap=document.getElementById('sortWrap');
+
+let activeRegion="all", query="", sortMode="date", view="cards";
+let tableSort={key:"team", dir:1};
+
+// flat list for the table; remember chronological order index
+const FLAT=[];
+DATA.forEach((r,ri)=>r.teams.forEach(t=>FLAT.push({team:t.n,rohe:r.name,place:t.p,joint:!!t.joint,debut:!!t.debut,order:ri})));
+
+const strip=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function highlight(name,q){
+  if(!q) return esc(name);
+  const i=strip(name).toLowerCase().indexOf(q);
+  if(i<0) return esc(name);
+  return esc(name.slice(0,i))+'<mark>'+esc(name.slice(i,i+q.length))+'</mark>'+esc(name.slice(i+q.length));
+}
+const matchQ=name=> !query || strip(name).toLowerCase().includes(query);
+
+function buildChips(){
+  const all=document.createElement('button');
+  all.className='chip active'; all.dataset.r='all';
+  all.innerHTML=`All rohe <span class="c">56</span>`;
+  chipsEl.appendChild(all);
+  DATA.forEach(r=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.dataset.r=r.name;
+    b.innerHTML=`${r.name} <span class="c">${r.teams.length}</span>`;
+    chipsEl.appendChild(b);
+  });
+  chipsEl.addEventListener('click',e=>{
+    const chip=e.target.closest('.chip'); if(!chip) return;
+    activeRegion=chip.dataset.r;
+    [...chipsEl.children].forEach(c=>c.classList.toggle('active',c===chip));
+    render();
+    if(view==="cards" && activeRegion!=="all"){
+      const node=document.querySelector(`[data-region="${CSS.escape(activeRegion)}"]`);
+      if(node) node.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+}
+
+function orderedRegions(){
+  const arr=DATA.map((r,i)=>({r,i}));
+  if(sortMode==="alpha") arr.sort((a,b)=>strip(a.r.name).localeCompare(strip(b.r.name)));
+  return arr;
+}
+
+function renderCards(){
+  cardView.innerHTML=''; let shown=0, d=0;
+  orderedRegions().forEach(({r,i})=>{
+    if(activeRegion!=="all" && r.name!==activeRegion) return;
+    const teams=r.teams.filter(t=>matchQ(t.n));
+    if(query && teams.length===0) return;
+    shown += teams.length;
+
+    const sec=document.createElement('section');
+    sec.className='region'; sec.dataset.region=r.name;
+    sec.style.animationDelay=(d++*0.04)+'s';
+    const badge=r.note?`<span class="r-badge">${r.note} &middot; ${r.teams.length} qualified</span>`:`<span class="r-badge">${r.teams.length} qualified</span>`;
+    const list=teams.map(t=>{
+      const gold=t.p===1?'gold':'';
+      const placeLabel=t.joint?'1<span style="font-size:.65em">=</span>':t.p;
+      let tags='';
+      if(t.p===1) tags+=`<span class="tag win">${t.joint?'Joint winner':'Regional winner'}</span>`;
+      if(t.debut) tags+=`<span class="tag">Debut</span>`;
+      return `<li class="team ${gold}">
+        <div class="place">${placeLabel}</div>
+        <div>
+          <div class="tname">${highlight(t.n,query)}</div>
+          <div class="tsub">${ord[t.p]||t.p+'th'} place</div>
+          ${tags?`<div class="tags">${tags}</div>`:''}
+        </div></li>`;
+    }).join('');
+    sec.innerHTML=`
+      <div class="region-head">
+        <div class="r-name">${r.name}</div>
+        <div class="r-meta"><span>${r.loc}</span> &middot; ${r.date}</div>
+        ${badge}
+      </div>
+      <ul class="teams">${list}</ul>`;
+    cardView.appendChild(sec);
+  });
+  return shown;
+}
+
+function renderTable(){
+  let rows=FLAT.filter(x=>(activeRegion==="all"||x.rohe===activeRegion) && matchQ(x.team));
+  const {key,dir}=tableSort;
+  rows.sort((a,b)=>{
+    let c=0;
+    if(key==="team") c=strip(a.team).localeCompare(strip(b.team));
+    else if(key==="rohe") c=strip(a.rohe).localeCompare(strip(b.rohe))||a.place-b.place;
+    else if(key==="place") c=a.place-b.place||strip(a.rohe).localeCompare(strip(b.rohe));
+    else if(key==="debut") c=(b.debut-a.debut)||strip(a.team).localeCompare(strip(b.team));
+    return c*dir;
+  });
+  tbody.innerHTML=rows.map(x=>{
+    const placeLabel=(ord[x.place]||x.place+'th')+(x.joint?' (tie)':'');
+    return `<tr>
+      <td class="team-cell">${highlight(x.team,query)}</td>
+      <td class="rohe-cell">${x.rohe}</td>
+      <td><span class="pill ${x.place===1?'gold':''}">${x.place}</span> <span style="color:var(--bone-dim);font-size:.84rem">${placeLabel}</span></td>
+      <td>${x.debut?'<span class="yes">Yes</span>':'<span class="no">—</span>'}</td>
+    </tr>`;
+  }).join('');
+  document.querySelectorAll('thead th').forEach(th=>{
+    const on=th.dataset.k===key;
+    th.classList.toggle('sorted',on);
+    th.querySelector('.arrow').textContent= on ? (dir===1?'▲':'▼') : '';
+  });
+  return rows.length;
+}
+
+function render(){
+  let shown;
+  if(view==="cards"){ cardView.classList.remove('hidden'); tableView.classList.add('hidden'); sortWrap.style.display=''; shown=renderCards(); }
+  else { cardView.classList.add('hidden'); tableView.classList.remove('hidden'); sortWrap.style.display='none'; shown=renderTable(); }
+
+  emptyEl.classList.toggle('show',shown===0);
+  tableView.classList.toggle('hidden', view!=="table"||shown===0);
+  if(view==="cards"&&shown===0) cardView.classList.add('hidden');
+
+  if(query) countEl.innerHTML=`<b>${shown}</b> kapa match`;
+  else if(activeRegion!=="all") countEl.innerHTML=`<b>${shown}</b> kapa in this rohe`;
+  else countEl.innerHTML=`<b>56</b> kapa &middot; <b>13</b> rohe`;
+}
+
+searchEl.addEventListener('input',()=>{
+  query=strip(searchEl.value.trim()).toLowerCase();
+  if(query){activeRegion="all";[...chipsEl.children].forEach(c=>c.classList.toggle('active',c.dataset.r==="all"));}
+  render();
+});
+document.getElementById('sort').addEventListener('change',e=>{sortMode=e.target.value;render();});
+document.getElementById('viewSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  view=b.dataset.v;
+  [...e.currentTarget.children].forEach(x=>{const on=x===b;x.classList.toggle('active',on);x.setAttribute('aria-selected',on);});
+  render();
+});
+document.querySelector('thead').addEventListener('click',e=>{
+  const th=e.target.closest('th'); if(!th) return;
+  const k=th.dataset.k;
+  if(tableSort.key===k) tableSort.dir*=-1;
+  else tableSort={key:k, dir:1};
+  renderTable();
+});
+
+buildChips();
+render();
+</script>
 </body>
 </html>
