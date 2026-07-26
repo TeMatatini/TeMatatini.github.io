@@ -133,7 +133,7 @@
   <div class="wrap">
     <span class="eyebrow"><span class="dot"></span>Te Matatini 2027 &middot; Hopuhopu</span>
     <h1 class="title">The road to <span class="red">Hopuhopu</span></h1>
-    <p class="lede">In 2026, <strong>56 kapa haka</strong> earned their place at <strong>Te Matatini 2027</strong> through <strong>13 regional competitions</strong> spanning Aotearoa and Te Whenua Moemoeā. Every rōpū that placed in its rohe qualified for the national stage — hosted by Waikato-Tainui under the mantle of the Kīngitanga.</p>
+    <p class="lede">In 2026, <strong>57 kapa haka</strong> earned their place at <strong>Te Matatini 2027</strong> through <strong>13 regional competitions</strong> spanning Aotearoa and Te Whenua Moemoeā. Every rōpū that placed in its rohe qualified for the national stage — hosted by Waikato-Tainui under the mantle of the Kīngitanga.</p>
 
     <svg class="poutama" viewBox="0 0 1180 14" preserveAspectRatio="none" aria-hidden="true">
       <defs><pattern id="pt" width="56" height="14" patternUnits="userSpaceOnUse">
@@ -143,7 +143,7 @@
     </svg>
 
     <div class="stats">
-      <div class="stat"><div class="n">56</div><div class="l">Kapa qualified</div></div>
+      <div class="stat"><div class="n">57</div><div class="l">Kapa qualified</div></div>
       <div class="stat"><div class="n">13</div><div class="l">Rohe / regions</div></div>
       <div class="stat"><div class="n">2027</div><div class="l">Te Matatini year</div></div>
       <div class="stat"><div class="n">Hopuhopu</div><div class="l">Host, Waikato-Tainui</div></div>
@@ -227,7 +227,7 @@ const DATA = [
   { rohe:"Te Whenua Moemoeā", name:"Te Whenua Moemoeā", loc:"Gold Coast, Australia", date:"28 March 2026", teams:[
     {p:1,n:"Te Kahu Ariki", debut:true},{p:2,n:"Te Kapa Haka o Te Hau Tawhiti"},{p:3,n:"Te Whare Haka o Nārama", debut:true} ]},
   { rohe:"Te Tai Tokerau", name:"Te Tai Tokerau", loc:"Whangārei", date:"28 March 2026", teams:[
-    {p:1,n:"Muriwhenua"},{p:2,n:"Hātea Kapa Haka"},{p:3,n:"Te Kapa Haka o Waerenga Te Kaha"} ]},
+    {p:1,n:"Muriwhenua"},{p:2,n:"Hātea Kapa Haka"},{p:3,n:"Te Kapa Haka o Waerenga Te Kaha"},{p:4,n:"Te Uri o Manumanu"} ]},
   { rohe:"Tainui", name:"Tainui", loc:"Hamilton", date:"17–18 April 2026", teams:[
     {p:1,n:"Te Pou o Mangataawhiri"},{p:2,n:"Te Iti Kahurangi"},{p:3,n:"Te Kapa Haka o Aawhina I Te Kaupapa", debut:true},{p:4,n:"Te Haona Kaha", debut:true},{p:5,n:"Mōtai Tangata Rau"},{p:6,n:"Te Kapa Haka o Ngā Pua o Te Kōwhara"} ]},
   { rohe:"Rangitāne", name:"Rangitāne", loc:"Palmerston North", date:"18 April 2026", teams:[
@@ -274,7 +274,7 @@ const matchQ=name=> !query || strip(name).toLowerCase().includes(query);
 function buildChips(){
   const all=document.createElement('button');
   all.className='chip active'; all.dataset.r='all';
-  all.innerHTML=`All rohe <span class="c">56</span>`;
+  all.innerHTML=`All rohe <span class="c">57</span>`;
   chipsEl.appendChild(all);
   DATA.forEach(r=>{
     const b=document.createElement('button');
@@ -377,7 +377,7 @@ function render(){
 
   if(query) countEl.innerHTML=`<b>${shown}</b> kapa match`;
   else if(activeRegion!=="all") countEl.innerHTML=`<b>${shown}</b> kapa in this rohe`;
-  else countEl.innerHTML=`<b>56</b> kapa &middot; <b>13</b> rohe`;
+  else countEl.innerHTML=`<b>57</b> kapa &middot; <b>13</b> rohe`;
 }
 
 searchEl.addEventListener('input',()=>{
