@@ -81,6 +81,30 @@
   .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--ink-2);color:var(--bone-dim);font-family:inherit;font-size:.82rem;font-weight:500;padding:8px 15px;border-radius:100px;cursor:pointer;transition:.18s;white-space:nowrap}
   .chip:hover{border-color:var(--bone-dim);color:var(--bone)}
   .chip.active{background:var(--whero);border-color:var(--whero);color:#fff}
+
+  /* Phones: the sticky bar is laid out explicitly rather than left to wrap.
+     Row 1 search, row 2 grouping + view switcher, row 3 chips. The view
+     switcher drops to icons only (labels kept for screen readers) and the
+     match count goes below 560px — the chips already carry counts. */
+  @media(max-width:720px){
+    .controls{padding:10px 0}
+    .controls-inner{gap:8px}
+    .search{flex:1 1 100%;min-width:0;order:1}
+    #sortWrap,#groupWrap{order:2}
+    #viewSeg{order:3;margin-left:auto}
+    .count{order:4;width:100%;margin-left:0;text-align:right}
+    .search input{font-size:.9rem;padding:10px 14px 10px 38px}
+    .search svg{left:13px;width:16px;height:16px}
+    .select select{font-size:.8rem;padding:9px 30px 9px 13px}
+    .select::after{right:13px}
+    .seg button{padding:9px 14px;gap:0}
+    .seg button svg{width:17px;height:17px}
+    .seg button .lbl{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+    .chips{padding:9px 0 2px;gap:6px}
+    .chip{font-size:.78rem;padding:7px 12px}
+    .pool-legend{gap:6px 12px;font-size:.74rem;margin-bottom:14px}
+  }
+  @media(max-width:560px){ .count{display:none} }
   .chip .c{opacity:.7;font-variant-numeric:tabular-nums;margin-left:5px}
 
   main{padding:30px 0 60px}
@@ -165,6 +189,21 @@
     .pool{display:block;padding:0 0 10px}
     .draw-list{display:block;padding:8px 10px 0}
     .draw-item{margin:0;min-height:62px}
+  }
+  /* Phones: the four pools stack into a single column so the whole day reads as
+     one continuous scroll. Shared subgrid rows are switched off — with one
+     column there is nothing to line up, and leaving them on pushes pools 2-4
+     into implicit columns off the side of the screen. */
+  @media(max-width:720px){
+    .pool-grid{display:block;grid-template-rows:none;background:var(--ink-2)}
+    .pool{display:block;padding:0 0 8px;border-top:1px solid var(--line)}
+    .pool:first-child{border-top:0}
+    .draw-list{display:block;padding:6px 8px 0}
+    .draw-item{margin:0;min-height:0}
+    .day{scroll-margin-top:150px}
+    .day-head{padding:14px 16px}
+    .day-note{padding:8px 16px}
+    .day-n{font-size:1.3rem}
   }
   .draw-no{flex:0 0 auto;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:.92rem;font-variant-numeric:tabular-nums;background:var(--pool,var(--line));color:#fff}
   [data-pool="Te Ihu"] .draw-no{color:#20240a}
@@ -259,15 +298,15 @@
       <div class="seg" id="viewSeg" role="tablist" aria-label="View">
         <button data-v="draw" class="active" role="tab" aria-selected="true">
           <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
-          Draw
+          <span class="lbl">Draw</span>
         </button>
         <button data-v="cards" role="tab" aria-selected="false">
           <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-          Rohe
+          <span class="lbl">Rohe</span>
         </button>
         <button data-v="table" role="tab" aria-selected="false">
           <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          Table
+          <span class="lbl">Table</span>
         </button>
       </div>
 
@@ -481,6 +520,20 @@ const sortWrap=document.getElementById('sortWrap');
 const groupWrap=document.getElementById('groupWrap');
 const legendEl=document.getElementById('legend');
 
+/* Below this width the sticky bar is in its condensed layout, so the control
+   labels are shortened to match ("Group: by day" -> "By day", and day chips
+   lose the date). Re-run whenever the breakpoint is crossed. */
+const compactMQ=window.matchMedia('(max-width:720px)');
+const isCompact=()=>compactMQ.matches;
+function syncLabels(){
+  const c=isCompact(), g=document.getElementById('group').options, so=document.getElementById('sort').options;
+  g[0].textContent = c?'By day':'Group: by day';
+  g[1].textContent = c?'By pool':'Group: by pool';
+  so[0].textContent= c?'Regionals date':'Sort: regionals date';
+  so[1].textContent= c?'A\u2013Z by rohe':'Sort: A\u2013Z by rohe';
+}
+compactMQ.addEventListener('change',()=>{syncLabels();buildChips();render();});
+
 let activeRegion="all", activeDay="all", query="", sortMode="date", groupMode="day", view="draw";
 let tableSort={key:"day", dir:1};
 
@@ -508,8 +561,9 @@ function buildChips(){
       `<button class="chip${activeDay==='all'?' active':''}" data-d="all">All days <span class="c">57</span></button>`);
     DAYS.forEach(d=>{
       const n=DRAW.filter(x=>x.d===d.d).length;
+      const label = isCompact() ? d.ra : `${d.ra} · ${d.date.replace(' 2027','')}`;
       chipsEl.insertAdjacentHTML('beforeend',
-        `<button class="chip${String(activeDay)===String(d.d)?' active':''}" data-d="${d.d}">${d.ra} · ${d.date.replace(' 2027','')} <span class="c">${n}</span></button>`);
+        `<button class="chip${String(activeDay)===String(d.d)?' active':''}" data-d="${d.d}">${label} <span class="c">${n}</span></button>`);
     });
   } else {
     chipsEl.insertAdjacentHTML('beforeend',
@@ -736,7 +790,6 @@ function render(){
   if(query) countEl.innerHTML=`<b>${shown}</b> kapa match`;
   else if(view==="draw" && activeDay!=="all") countEl.innerHTML=`<b>${shown}</b> kapa on this day`;
   else if(view!=="draw" && activeRegion!=="all") countEl.innerHTML=`<b>${shown}</b> kapa in this rohe`;
-  else countEl.innerHTML=`<b>57</b> kapa &middot; <b>4</b> pools &middot; <b>13</b> rohe`;
 }
 
 searchEl.addEventListener('input',()=>{
@@ -764,6 +817,7 @@ document.querySelector('thead').addEventListener('click',e=>{
   renderTable();
 });
 
+syncLabels();
 buildChips();
 buildLegend();
 buildGallery();
