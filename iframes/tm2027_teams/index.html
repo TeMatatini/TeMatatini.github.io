@@ -29,33 +29,18 @@
   [data-pool="Te Kei"]{--pool:var(--kei)}
   [data-pool="Te Awa"]{--pool:var(--awa)}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;color-scheme:dark;scroll-padding-top:96px}
   body{background:var(--ink);color:var(--bone);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   ::selection{background:var(--whero);color:#fff}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
 
-  /* Hero */
-  .hero{position:relative;padding:74px 0 38px;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% -10%, rgba(207,67,39,.20), transparent 60%),radial-gradient(90% 70% at 0% 0%, rgba(224,169,63,.10), transparent 55%);pointer-events:none}
-  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--kowhai);font-weight:600;border:1px solid var(--line);border-radius:100px;padding:7px 15px;margin-bottom:26px;background:rgba(0,0,0,.2)}
-  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--whero);box-shadow:0 0 10px var(--whero)}
-  h1.title{margin:0}
-  h1.title .lockup{margin-inline:auto;display:block;align-items:center;width:clamp(200px,24vw,300px);height:auto;
     /* the artwork is white already; this only softens it against the warm ink */
     filter:drop-shadow(0 2px 14px rgba(0,0,0,.45))}
-  @media(max-width:640px){h1.title .lockup{width:min(62vw,240px)}}
-  .lede{margin-top:26px;font-size:clamp(1rem,1.6vw,1.18rem);color:var(--bone-dim)}
-  .lede strong{color:var(--bone);font-weight:600}
-  .poutama{display:block;width:100%;height:14px;margin:34px 0 0;opacity:.9}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:36px}
-  .stat{background:var(--ink-2);padding:22px 20px}
   .stat .n{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1;color:var(--kowhai)}
   .stat .l{margin-top:8px;font-size:.78rem;letter-spacing:.04em;color:var(--bone-dim);text-transform:uppercase}
-  @media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
 
   /* Controls */
-  .controls{position:sticky;top:0;z-index:30;background:rgba(24,18,16,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin-top:46px;padding:16px 0}
+  .controls{position:sticky;top:0;z-index:30;background:rgba(24,18,16,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin-top:0;padding:12px 0}
   .controls-inner{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
   .search{position:relative;flex:1 1 240px;min-width:200px}
   .search input{width:100%;background:var(--ink-2);border:1px solid var(--line);color:var(--bone);font-family:inherit;font-size:.95rem;padding:12px 14px 12px 42px;border-radius:100px;outline:none;transition:border-color .2s,box-shadow .2s}
@@ -86,7 +71,7 @@
      Row 1 search, row 2 grouping + view switcher, row 3 chips. The view
      switcher drops to icons only (labels kept for screen readers) and the
      match count goes below 560px — the chips already carry counts. */
-  @media(max-width:720px){
+  @media(max-width:900px){
     .controls{padding:10px 0}
     .controls-inner{gap:8px}
     .search{flex:1 1 100%;min-width:0;order:1}
@@ -107,13 +92,13 @@
   @media(max-width:560px){ .count{display:none} }
   .chip .c{opacity:.7;font-variant-numeric:tabular-nums;margin-left:5px}
 
-  main{padding:30px 0 60px}
+  main{padding:16px 0 24px}
 
   /* Card grid — 3 up */
   .region-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
   @media(max-width:920px){.region-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:600px){.region-grid{grid-template-columns:1fr}}
-  .region{border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-2);overflow:hidden;scroll-margin-top:170px;animation:rise .5s both}
+  .region{border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-2);overflow:hidden;scroll-margin-top:112px;animation:rise .5s both}
   @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   .region-head{padding:20px 20px 16px;border-bottom:1px solid var(--line);position:relative}
   .region-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--whero)}
@@ -139,7 +124,7 @@
 
   /* Table view */
   .table-wrap{border:1px solid var(--line);border-radius:var(--radius);overflow-x:auto;background:var(--ink-2)}
-  table{width:100%;border-collapse:collapse;min-width:1080px}
+  table{width:100%;border-collapse:collapse;min-width:880px}
   thead th{position:sticky;top:0;background:var(--ink-3);text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bone-dim);font-weight:600;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;white-space:nowrap}
   thead th:hover{color:var(--bone)}
   thead th .arrow{opacity:0;margin-left:6px;font-size:.7em;font-family:'Inter',system-ui,sans-serif}
@@ -147,7 +132,7 @@
   thead th.sorted .arrow{opacity:1}
   tbody tr{height:54px}
   tbody td{padding:13px 16px;border-bottom:1px solid rgba(58,44,34,.6);font-size:.92rem;vertical-align:middle}
-  td.team-cell,td.rohe-cell{white-space:nowrap}
+  td.team-cell{white-space:nowrap}
   tbody tr:last-child td{border-bottom:0}
   tbody tr:hover{background:var(--ink-3)}
   td.team-cell{font-weight:600;color:var(--bone)}
@@ -158,7 +143,7 @@
   .no{color:#6b5d4d}
 
   /* Draw view */
-  .day{border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-2);overflow:hidden;margin-bottom:20px;scroll-margin-top:180px;animation:rise .5s both}
+  .day{border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-2);overflow:hidden;margin-bottom:14px;scroll-margin-top:112px;animation:rise .5s both}
   .day-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;padding:18px 22px;border-bottom:1px solid var(--line);background:var(--ink-3)}
   .day-n{font-family:var(--display);font-weight:900;font-size:1.5rem;line-height:1;color:var(--bone)}
   .day-date{font-size:.86rem;color:var(--bone-dim)}
@@ -169,7 +154,12 @@
      with row 1 of Te Haumi, Te Kei and Te Awa even when a name wraps to two
      lines. The item rows are 1fr, so every row in a section is the same height
      — set by the tallest name in it. --rows is written inline per section. */
-  .pool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  /* Four explicit columns, never auto-fit. Each .pool spans every row via
+     subgrid, so if the track count ever drops to 3 the fourth pool is pushed
+     into an implicit column and clipped by .day's overflow:hidden. At iframe
+     widths auto-fit did exactly that, hiding Te Awa. Below --stack the whole
+     grid becomes a single stacked list instead. */
+  .pool-grid{display:grid;grid-template-columns:repeat(4,1fr);
     grid-template-rows:auto repeat(var(--rows,4),1fr) 10px;
     column-gap:1px;row-gap:0;background:var(--line)}
   .pool{background:var(--ink-2);padding:0;display:grid;grid-row:1/-1;grid-template-rows:subgrid;row-gap:0}
@@ -194,13 +184,13 @@
      one continuous scroll. Shared subgrid rows are switched off — with one
      column there is nothing to line up, and leaving them on pushes pools 2-4
      into implicit columns off the side of the screen. */
-  @media(max-width:720px){
+  @media(max-width:900px){
     .pool-grid{display:block;grid-template-rows:none;background:var(--ink-2)}
     .pool{display:block;padding:0 0 8px;border-top:1px solid var(--line)}
     .pool:first-child{border-top:0}
     .draw-list{display:block;padding:6px 8px 0}
     .draw-item{margin:0;min-height:0}
-    .day{scroll-margin-top:150px}
+    .day{scroll-margin-top:100px}
     .day-head{padding:14px 16px}
     .day-note{padding:8px 16px}
     .day-n{font-size:1.3rem}
@@ -210,12 +200,12 @@
   .draw-name{font-weight:600;font-size:.9rem;line-height:1.3;color:var(--bone);letter-spacing:-.01em}
   .draw-sub{font-size:.72rem;color:var(--bone-dim);margin-top:2px}
 
-  .pool-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 20px;font-size:.78rem;color:var(--bone-dim)}
+  .pool-legend{display:flex;flex-wrap:wrap;gap:7px 16px;margin:0 0 13px;font-size:.78rem;color:var(--bone-dim)}
   .pool-legend span{display:inline-flex;align-items:center;gap:7px}
   .pool-legend i{width:11px;height:11px;border-radius:3px;background:var(--pool);display:inline-block}
 
   /* Official graphics */
-  .graphics{margin-top:34px;border-top:1px solid var(--line);padding-top:26px}
+  .graphics{margin-top:22px;border-top:1px solid var(--line);padding-top:18px}
   .graphics h2{font-family:var(--display);font-weight:600;font-size:1.15rem;color:var(--bone);margin-bottom:5px}
   .graphics p{font-size:.84rem;color:var(--bone-dim);max-width:62ch;margin-bottom:16px}
   .gal{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
@@ -229,13 +219,6 @@
   .empty.show{display:block}
   .empty .big{font-family:var(--display);font-size:1.4rem;color:var(--bone);margin-bottom:8px}
   .hidden{display:none}
-
-  footer{border-top:1px solid var(--line);padding:34px 0 60px;color:var(--bone-dim);font-size:.84rem}
-  footer .glos{display:flex;flex-wrap:wrap;gap:10px 26px;margin-bottom:22px}
-  footer .glos div b{color:var(--bone);font-weight:600}
-  footer .note{max-width:75ch}
-  footer a{color:var(--kowhai);text-decoration:none;border-bottom:1px solid transparent}
-  footer a:hover{border-color:var(--kowhai)}
 
   :focus-visible{outline:2px solid var(--kowhai);outline-offset:2px;border-radius:6px}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -478,7 +461,7 @@ const legendEl=document.getElementById('legend');
 /* Below this width the sticky bar is in its condensed layout, so the control
    labels are shortened to match ("Group: by day" -> "By day", and day chips
    lose the date). Re-run whenever the breakpoint is crossed. */
-const compactMQ=window.matchMedia('(max-width:720px)');
+const compactMQ=window.matchMedia('(max-width:900px)');
 const isCompact=()=>compactMQ.matches;
 function syncLabels(){
   const c=isCompact(), g=document.getElementById('group').options, so=document.getElementById('sort').options;
@@ -771,6 +754,38 @@ document.querySelector('thead').addEventListener('click',e=>{
   else tableSort={key:k, dir:1};
   renderTable();
 });
+
+
+/* ---------------------------------------------------------------
+   Iframe height reporting.
+   Posts this document's height to the parent page whenever it
+   changes, so the embed can be sized to fit. Harmless if nothing
+   is listening. The parent listens like this:
+
+     window.addEventListener('message', function (e) {
+       if (e.data && e.data.tmDrawHeight) {
+         document.getElementById('tm-frame').style.height =
+           e.data.tmDrawHeight + 'px';
+       }
+     });
+
+   NOTE: only use this if you want a full-height frame. Auto-sizing
+   means the frame never scrolls internally, so the sticky filter bar
+   has nothing to stick to and will scroll away. A fixed-height frame
+   that scrolls internally keeps the sticky bar working.
+----------------------------------------------------------------*/
+function reportHeight(){
+  if(window.parent===window) return;          // not embedded
+  const h=Math.ceil(document.documentElement.scrollHeight);
+  if(h===reportHeight.last) return;
+  reportHeight.last=h;
+  window.parent.postMessage({tmDrawHeight:h},'*');
+}
+if(window.parent!==window){
+  if(window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
+  window.addEventListener('load',reportHeight);
+  window.addEventListener('resize',reportHeight);
+}
 
 syncLabels();
 buildChips();
